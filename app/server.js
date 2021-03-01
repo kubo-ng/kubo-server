@@ -16,6 +16,8 @@ const io = socketio(http_server);
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
+// end point for interacting with the user model
+server.use("/user", require("./routes/userRoute.js"))
 
 const PORT = process.env.PORT || 3000;
 

@@ -1,0 +1,53 @@
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+const user_schema = mongoose.Schema({
+  name: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  email: {
+    type: String,
+    trim: true,
+    unique: true,
+    required: true,
+    validate(value) {
+      const validateEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!validateEmail.test(value)) throw new Error("Invalid email used");
+    },
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+});
+
+//generate jwt token when called
+user_schema.methods.generateToken = async function () {
+  const token = await jwt.sign({ id: this._id }, "supersecretkey");
+  this.tokens.push({ token });
+  await this.save();
+  return token;
+};
+
+//enable hashing of password before user details is saved and while being updated
+user_schema.pre("save", async function (exit) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 8);
+  }
+  exit();
+});
+
+const User = mongoose.model("User", user_schema);
+
+module.exports = User;
