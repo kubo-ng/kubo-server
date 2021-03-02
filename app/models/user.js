@@ -40,6 +40,16 @@ user_schema.methods.generateToken = async function () {
   return token;
 };
 
+// edit the user data stored in the database before returning to the client
+user_schema.methods.toJSON = function () {
+  const user_object = this.toObject();
+  delete user_object._id;
+  delete user_object.__v;
+  delete user_object.tokens;
+  delete user_object.password;
+  return user_object;
+};
+
 //enable hashing of password before user details is saved and while being updated
 user_schema.pre("save", async function (exit) {
   if (this.isModified("password")) {

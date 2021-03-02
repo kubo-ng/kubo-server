@@ -10,7 +10,9 @@ const create_user = async (req, res) => {
   try {
     const new_user = new User(user_data);
     user = await new_user.save();
-  } catch (e) {}
+  } catch (e) {
+    res.send({ userCreated: false });
+  }
 
   // api call result
   if (!user) return res.send({ userCreated: false });
@@ -35,13 +37,22 @@ const login_user = async (req, res) => {
     );
 
     if (!password_check_result) throw new Error("Invalide login");
-    res.send({ valid_credentials: true });
+
+    const user_token = await searched_user_result.generateToken();
+    res.send({ valid_credentials: true, user_token });
   } catch (e) {
     res.send({ valid_credentials: false });
   }
 };
 
+// get user profile
+const get_user = (req, res) => {
+  const user = req.body.user;
+  res.send({auth_result: true, user});
+};
+
 module.exports = {
   create_user,
   login_user,
+  get_user,
 };
