@@ -2,12 +2,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user.js");
 
 const authMiddleware = async (req, res, next) => {
+
   /*
   get token passed through the headers
   verify if the jwt token sent is valid 
   throw an error and return false for auth_result if it is not
   continue with the request if it is
   */
+ 
   try {
     const auth_token_bearer = req.headers.authorization;
     const auth_token = auth_token_bearer.slice(7, auth_token_bearer.length);

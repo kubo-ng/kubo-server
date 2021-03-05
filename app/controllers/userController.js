@@ -48,11 +48,27 @@ const login_user = async (req, res) => {
 // get user profile
 const get_user = (req, res) => {
   const user = req.body.user;
-  res.send({auth_result: true, user});
+  res.send({ auth_result: true, user });
+};
+
+// get a user profile by email
+const get_user_by_email = async (req, res) => {
+  const user_email = req.body.email;
+  let user;
+
+  try {
+    user = await User.findOne({ email: user_email });
+    if (user == null) throw new Error("User not found!");
+
+    res.send({ user });
+  } catch (e) {
+    res.send({ user: null });
+  }
 };
 
 module.exports = {
   create_user,
   login_user,
   get_user,
+  get_user_by_email,
 };
