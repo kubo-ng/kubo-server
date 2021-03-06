@@ -11,11 +11,11 @@ const create_user = async (req, res) => {
     const new_user = new User(user_data);
     user = await new_user.save();
   } catch (e) {
-    res.send({ userCreated: false });
+    res.send({ userCreated: false, error: "Something went wrong while creating the user." });
   }
 
   // api call result
-  if (!user) return res.send({ userCreated: false });
+  if (!user) return res.send({ userCreated: false, error: "Something went wrong while creating the user." });
 
   const user_token = await user.generateToken();
   res.send({ user_created: true, token: user_token });
@@ -39,7 +39,7 @@ const login_user = async (req, res) => {
     if (!password_check_result) throw new Error("Invalide login");
 
     const user_token = await searched_user_result.generateToken();
-    res.send({ valid_credentials: true, user_token });
+    res.send({ valid_credentials: true, user_token, error: "Something went wrong while while trying to login the user." });
   } catch (e) {
     res.send({ valid_credentials: false });
   }
@@ -63,7 +63,7 @@ const get_user_by_email = async (req, res) => {
 
     res.send({ user });
   } catch (e) {
-    res.send({ user: null });
+    res.send({ user: null, error: "Something went wrong while trying to get the users profile." });
   }
 };
 
