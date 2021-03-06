@@ -48,6 +48,7 @@ const login_user = async (req, res) => {
 // get user profile
 const get_user = (req, res) => {
   const user = req.body.user;
+  console.log(req.body.user);
   res.send({ auth_result: true, user });
 };
 
@@ -66,9 +67,32 @@ const get_user_by_email = async (req, res) => {
   }
 };
 
+// update user info
+const update_user_info = async (req, res) => {
+  const new_user_info = req.body.updated_info;
+  const user = req.body.user;
+
+  try {
+    const info_keys = Object.keys(new_user_info);
+
+    info_keys.forEach((key) => {
+      const new_info = new_user_info[key];
+
+      if (new_info) {
+        user[key] = new_user_info[key];
+      }
+    });
+
+    await user.save()
+    res.send({status: "done"})
+    
+  } catch (e) {res.send({error: "Error while updating user info."})}
+};
+
 module.exports = {
   create_user,
   login_user,
   get_user,
   get_user_by_email,
+  update_user_info,
 };

@@ -5,6 +5,7 @@ const {
   login_user,
   get_user,
   get_user_by_email,
+  update_user_info
 } = require("../controllers/userController.js");
 const authMiddleware = require("../middlewares/authMiddleware.js");
 
@@ -19,5 +20,8 @@ router.get("/profile", authMiddleware, get_user);
 
 // get user info by email
 router.get("/userbyemail", authMiddleware, get_user_by_email);
+
+// update user info
+router.post("/profile/update", authMiddleware, update_user_info)
 
 module.exports = router;
