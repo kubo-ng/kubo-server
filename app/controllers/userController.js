@@ -11,11 +11,18 @@ const create_user = async (req, res) => {
     const new_user = new User(user_data);
     user = await new_user.save();
   } catch (e) {
-    res.send({ userCreated: false, error: "Something went wrong while creating the user." });
+    res.send({
+      userCreated: false,
+      error: "Something went wrong while creating the user.",
+    });
   }
 
   // api call result
-  if (!user) return res.send({ userCreated: false, error: "Something went wrong while creating the user." });
+  if (!user)
+    return res.send({
+      userCreated: false,
+      error: "Something went wrong while creating the user.",
+    });
 
   const user_token = await user.generateToken();
   res.send({ user_created: true, token: user_token });
@@ -39,7 +46,11 @@ const login_user = async (req, res) => {
     if (!password_check_result) throw new Error("Invalide login");
 
     const user_token = await searched_user_result.generateToken();
-    res.send({ valid_credentials: true, user_token, error: "Something went wrong while while trying to login the user." });
+    res.send({
+      valid_credentials: true,
+      user_token,
+      error: "Something went wrong while while trying to login the user.",
+    });
   } catch (e) {
     res.send({ valid_credentials: false });
   }
@@ -63,7 +74,10 @@ const get_user_by_email = async (req, res) => {
 
     res.send({ user });
   } catch (e) {
-    res.send({ user: null, error: "Something went wrong while trying to get the users profile." });
+    res.send({
+      user: null,
+      error: "Something went wrong while trying to get the users profile.",
+    });
   }
 };
 
@@ -83,10 +97,11 @@ const update_user_info = async (req, res) => {
       }
     });
 
-    await user.save()
-    res.send({status: "done"})
-    
-  } catch (e) {res.send({error: "Error while updating user info."})}
+    await user.save();
+    res.send({ status: "done" });
+  } catch (e) {
+    res.send({ status: "failed", error: "Error while updating user info." });
+  }
 };
 
 module.exports = {
