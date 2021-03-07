@@ -2,6 +2,7 @@ const Property = require("../models/property.js");
 
 const create_property = async (req, res) => {
   const property_info = req.body.property_info;
+  property_info.owner = req.body.user._id
 
   try {
     const property = new Property(property_info);

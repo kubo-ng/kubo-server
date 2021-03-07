@@ -46,6 +46,10 @@ const property_schema = mongoose.Schema({
   property_image: {
     type: Buffer,
   },
+  owner: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+  },
 });
 
 const Property = mongoose.model("Property", property_schema);
