@@ -8,9 +8,8 @@ const create_property = async (req, res) => {
 
     if (!property) throw new Error("Failed to create new property.");
 
-    await property.save()
-    res.send({propertyCreated: true})
-
+    await property.save();
+    res.send({ propertyCreated: true });
   } catch (e) {
     res.send({
       propertyCreated: false,
@@ -19,6 +18,19 @@ const create_property = async (req, res) => {
   }
 };
 
+const get_property_by_id = async (req, res) => {
+  const property_id = req.query.id;
+
+  try {
+    const property = await Property.findById(property_id);
+    if (!property) throw new Error("Could not find user.");
+    res.send({property});
+  } catch (e) {
+    res.send({ property: null, error: "Failed to get user with id provided." });
+  }
+};
+
 module.exports = {
-    create_property
+  create_property,
+  get_property_by_id,
 };

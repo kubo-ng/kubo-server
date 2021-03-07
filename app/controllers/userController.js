@@ -59,7 +59,7 @@ const login_user = async (req, res) => {
 // get user profile
 const get_user = (req, res) => {
   const user = req.body.user;
-  console.log(req.body.user);
+  
   res.send({ auth_result: true, user });
 };
 
