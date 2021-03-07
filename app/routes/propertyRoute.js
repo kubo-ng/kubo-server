@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post("/create", authMiddleware, create_property);
 
-router.get("/test", authMiddleware, get_property_by_id)
+router.get("/", authMiddleware, get_property_by_id)
+
 
 module.exports = router;
