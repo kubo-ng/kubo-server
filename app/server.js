@@ -20,6 +20,9 @@ server.use(express.urlencoded({ extended: true }));
 server.use("/user", require("./routes/userRoute.js"))
 // end point for interacting with the property model
 server.use("/property", require("./routes/propertyRoute.js"))
+// end point for interacting with the item model
+server.use("/item", require("./routes/itemRoute.js"))
+
 
 const PORT = process.env.PORT || 3000;
 
