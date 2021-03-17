@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 // this function is called to create a user in the database
 const create_user = async (req, res) => {
   // request body data
-  const user_data = req.body.user_data
+  const user_data = req.body.user_data;
 
   try {
     const new_user = new User(user_data);
@@ -12,7 +12,12 @@ const create_user = async (req, res) => {
     if (!user) throw new Error("Something went wrong while creating the user.");
 
     const user_token = await user.generateToken();
-    res.send({ user_created: true, token: user_token, id: user._id, email: user.email });
+    res.send({
+      user_created: true,
+      token: user_token,
+      id: user._id,
+      email: user.email,
+    });
   } catch (e) {
     res.send({
       userCreated: false,
@@ -56,20 +61,26 @@ const get_user = (req, res) => {
   res.send({ auth_result: true, user });
 };
 
-// get a user profile by email
-const get_user_by_email = async (req, res) => {
-  const user_email = req.body.email;
+// get a user profile by email and id
+const get_user_by_email_or_id = async (req, res) => {
+  const user_identifier = req.query.identifier;
   let user;
 
   try {
-    user = await User.findOne({ email: user_email });
-    if (user == null) throw new Error("User not found!");
+    const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email_regex.test(user_identifier)) {
+      user = await User.findOne({ email: user_identifier });
+      if (user == null) throw new Error("User not found!");
 
-    res.send({ user });
+      res.send({ user });
+    } else {
+      user = await User.findById(user_identifier);
+      res.send({ user });
+    }
   } catch (e) {
     res.send({
       user: null,
-      error: "Something went wrong while trying to get the users profile.",
+      error: e.message,
     });
   }
 };
@@ -101,6 +112,6 @@ module.exports = {
   create_user,
   login_user,
   get_user,
-  get_user_by_email,
+  get_user_by_email_or_id,
   update_user_info,
 };
