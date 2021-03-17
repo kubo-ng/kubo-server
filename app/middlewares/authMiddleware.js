@@ -25,7 +25,7 @@ const authMiddleware = async (req, res, next) => {
     req.body.user = user;
     next();
   } catch (e) {
-    res.send({ auth_result: false });
+    res.status(401).send({ auth_result: false, error: e.message });
   }
 };
 

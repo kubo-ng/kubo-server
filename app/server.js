@@ -23,6 +23,10 @@ server.use("/property", require("./routes/propertyRoute.js"))
 // end point for interacting with the item model
 server.use("/item", require("./routes/itemRoute.js"))
 
+server.use((req, res) => {
+    res.status(404).send({error: "This http endpoint does not exist"})
+})
+
 
 const PORT = process.env.PORT || 3000;
 
