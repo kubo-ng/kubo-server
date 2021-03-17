@@ -24,10 +24,11 @@ const get_property_by_id = async (req, res) => {
 
   try {
     const property = await Property.findById(property_id);
-    if (!property) throw new Error("Could not find user.");
+    if (!property)
+      throw new Error("Could not find property with the id provided.");
     res.send({ property });
   } catch (e) {
-    res.send({ property: null, error: "Failed to get user with id provided." });
+    res.send({ property: null, error: e.message });
   }
 };
 

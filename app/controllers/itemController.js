@@ -16,6 +16,19 @@ const create_item = async (req, res) => {
     }
 }
 
+const get_item_by_id = async (req, res) => {
+    const item_id = req.query.id;
+  
+    try {
+      const item = await Item.findById(item_id);
+      if (!item) throw new Error("Could not find an item with the id provided.");
+      res.send({ item });
+    } catch (e) {
+      res.send({ item: null, error: e.message });
+    }
+  };
+
 module.exports = {
-    create_item
+    create_item,
+    get_item_by_id
 }
