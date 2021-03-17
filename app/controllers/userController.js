@@ -4,34 +4,27 @@ const bcrypt = require("bcrypt");
 // this function is called to create a user in the database
 const create_user = async (req, res) => {
   // request body data
-  const user_data = req.body;
-  let user;
+  const user_data = req.body.user_data
 
   try {
     const new_user = new User(user_data);
-    user = await new_user.save();
+    const user = await new_user.save();
+    if (!user) throw new Error("Something went wrong while creating the user.");
+
+    const user_token = await user.generateToken();
+    res.send({ user_created: true, token: user_token, id: user._id, email: user.email });
   } catch (e) {
     res.send({
       userCreated: false,
-      error: "Something went wrong while creating the user.",
+      error: e.message,
     });
   }
-
-  // api call result
-  if (!user)
-    return res.send({
-      userCreated: false,
-      error: "Something went wrong while creating the user.",
-    });
-
-  const user_token = await user.generateToken();
-  res.send({ user_created: true, token: user_token });
 };
 
 // this function is called to log a user into his account
 const login_user = async (req, res) => {
   // request body data
-  const user_data = req.body;
+  const user_data = req.body.user_data;
 
   try {
     const searched_user_result = await User.findOne({ email: user_data.email });
@@ -59,7 +52,7 @@ const login_user = async (req, res) => {
 // get user profile
 const get_user = (req, res) => {
   const user = req.body.user;
-  
+
   res.send({ auth_result: true, user });
 };
 
