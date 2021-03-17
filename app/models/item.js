@@ -1,20 +1,29 @@
 const mongoose = require("mongoose");
 
 const item_schema = mongoose.Schema({
-  price: {
-    type: Number,
+  name: {
+    type: String,
     required: true,
     trim: true,
+    maxlength: 10
+  },
+  price: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 19
   },
   description: {
     type: String,
     required: true,
     trim: true,
+    maxlength: 100
   },
   quantity: {
-    type: Number,
+    type: String,
     required: true,
     trim: true,
+    maxlength: 2
   },
   item_image: {
     type: Buffer,
