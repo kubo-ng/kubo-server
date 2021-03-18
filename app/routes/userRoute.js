@@ -15,15 +15,15 @@ const router = express.Router();
 router.post("/signup", versionMiddleware, create_user_);
 
 // log in an existing user
-router.post("/login", login_user_);
+router.post("/login", versionMiddleware, login_user_);
 
 // get user info
-router.get("/profile", authMiddleware, get_user_);
+router.get("/profile", versionMiddleware, authMiddleware, get_user_);
 
 // get user info by email or id
-router.get("/user", authMiddleware, get_user_by_email_or_id_);
+router.get("/user", versionMiddleware, authMiddleware, get_user_by_email_or_id_);
 
 // update user info
-router.post("/profile/update", authMiddleware, update_user_info_);
+router.post("/profile/update", versionMiddleware, authMiddleware, update_user_info_);
 
 module.exports = router;
