@@ -1,4 +1,4 @@
-const Property = require("../models/property.js");
+const Property = require("../../../models/property.js");
 
 const create_property = async (req, res) => {
   const property_info = req.body.property_info;

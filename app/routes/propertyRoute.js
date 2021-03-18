@@ -4,7 +4,7 @@ const {
   create_property,
   get_property_by_id,
   delete_property_id
-} = require("../controllers/propertyController.js");
+} = require("../controllers/propertyControllers/v1.0/propertyController.js");
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-const Item = require("../models/item.js");
+const Item = require("../../../models/item.js");
 
 const create_item = async (req, res) => {
   const item_info = req.body.item_info;
