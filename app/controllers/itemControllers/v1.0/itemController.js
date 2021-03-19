@@ -44,12 +44,28 @@ const get_user_item_list = async (req, res) => {
   }
 };
 
+const get_item_list = async (req, res) => {
+  const user = req.body.user;
+  try {
+    const limit = Number.parseInt(req.query.limit);
+    const page = Number.parseInt(req.query.page);
+
+    if (limit > 0 && page > 0) {
+      const startFrom = (page - 1) * limit;
+      const items = Item.find().limit(limit).skip(startFrom);
+      res.send({ items });
+    } else throw new Error("Invalid value for either limit or page passed.");
+  } catch (e) {
+    res.send({ error: e.message });
+  }
+};
+
 const delete_item_id = async (req, res) => {
   const item_id = req.query.id;
   let is_item_deleted;
 
   try {
-    const item =  await Item.findByIdAndDelete(item_id);
+    const item = await Item.findByIdAndDelete(item_id);
     if (!item) throw new Error("Could not delete item with id provided.");
 
     is_item_deleted = true;
@@ -67,5 +83,6 @@ module.exports = {
   create_item,
   get_item_by_id,
   get_user_item_list,
-  delete_item_id
+  get_item_list,
+  delete_item_id,
 };
