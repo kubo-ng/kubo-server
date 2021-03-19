@@ -29,7 +29,8 @@ const item_schema = mongoose.Schema({
     type: Buffer,
   },
   owner: {
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 });

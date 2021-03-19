@@ -32,6 +32,23 @@ const get_property_by_id = async (req, res) => {
   }
 };
 
+// call this function to get a list of properties for the user
+const get_user_property_list = async (req, res) => {
+  const user = req.body.user;
+  try {
+    const limit = Number.parseInt(req.query.limit);
+    const page = Number.parseInt(req.query.page);
+
+    if (limit > 0 && page > 0) {
+      const startFrom = (page - 1) * limit;
+      await user.populate("properties").execPopulate();
+      res.send(user.properties.slice(startFrom, limit + startFrom));
+    } else throw new Error("Invalid value for either limit or page passed.");
+  } catch (e) {
+    res.send({ error: e.message });
+  }
+};
+
 const delete_property_id = async (req, res) => {
   const property_id = req.query.id;
   let is_property_deleted;
@@ -55,5 +72,6 @@ const delete_property_id = async (req, res) => {
 module.exports = {
   create_property,
   get_property_by_id,
+  get_user_property_list,
   delete_property_id,
 };

@@ -2,34 +2,57 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const user_schema = mongoose.Schema({
-  name: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-  email: {
-    type: String,
-    trim: true,
-    unique: true,
-    required: true,
-    validate(value) {
-      const validateEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!validateEmail.test(value)) throw new Error("Invalid email used");
+const user_schema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: true,
     },
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
+    email: {
+      type: String,
+      trim: true,
+      unique: true,
+      required: true,
+      validate(value) {
+        const validateEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!validateEmail.test(value)) throw new Error("Invalid email used");
       },
     },
-  ],
+    password: {
+      type: String,
+      required: true,
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+  {
+    toObject: {
+      virtuals: true,
+    },
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
+
+// add virtual field to link users to properties and items they post
+user_schema.virtual("items", {
+  ref: "Item",
+  localField: "_id",
+  foreignField: "owner",
+});
+
+user_schema.virtual("properties", {
+  ref: "Property",
+  localField: "_id",
+  foreignField: "owner",
 });
 
 //generate jwt token when called
