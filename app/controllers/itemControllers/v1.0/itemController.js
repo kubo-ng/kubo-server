@@ -45,15 +45,14 @@ const get_user_item_list = async (req, res) => {
 };
 
 const get_item_list = async (req, res) => {
-  const user = req.body.user;
   try {
     const limit = Number.parseInt(req.query.limit);
     const page = Number.parseInt(req.query.page);
 
     if (limit > 0 && page > 0) {
       const startFrom = (page - 1) * limit;
-      const items = Item.find().limit(limit).skip(startFrom);
-      res.send({ items });
+      const items = await Item.find().limit(limit).skip(startFrom);
+      res.send(items);
     } else throw new Error("Invalid value for either limit or page passed.");
   } catch (e) {
     res.send({ error: e.message });

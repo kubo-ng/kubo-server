@@ -49,6 +49,21 @@ const get_user_property_list = async (req, res) => {
   }
 };
 
+const get_property_list = async (req, res) => {
+  try {
+    const limit = Number.parseInt(req.query.limit);
+    const page = Number.parseInt(req.query.page);
+
+    if (limit > 0 && page > 0) {
+      const startFrom = (page - 1) * limit;
+      const properties = await Property.find().limit(limit).skip(startFrom);
+      res.send(properties);
+    } else throw new Error("Invalid value for either limit or page passed.");
+  } catch (e) {
+    res.send({ error: e.message });
+  }
+};
+
 const delete_property_id = async (req, res) => {
   const property_id = req.query.id;
   let is_property_deleted;
@@ -73,5 +88,6 @@ module.exports = {
   create_property,
   get_property_by_id,
   get_user_property_list,
+  get_property_list,
   delete_property_id,
 };
