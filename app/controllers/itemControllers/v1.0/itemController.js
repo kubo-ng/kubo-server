@@ -17,12 +17,16 @@ const create_item = async (req, res) => {
 };
 
 const get_item_by_id = async (req, res) => {
-  const item_id = req.query.id;
+  const item = req.query.item;
 
   try {
-    const item = await Item.findById(item_id);
-    if (!item) throw new Error("Could not find an item with the id provided.");
-    res.send({ item });
+    const item_by_name = await Item.find({name: item})
+    if (item_by_name.length === 0){
+      const item_by_id = await Item.findById(item);
+      if (!item_by_id) throw new Error("Could not find an item with the name or id provided.");
+      return res.send({ item: item_by_id });
+    }
+    res.send(item_by_name );
   } catch (e) {
     res.send({ item: null, error: e.message });
   }
