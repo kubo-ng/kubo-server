@@ -19,14 +19,17 @@ const create_property = async (req, res) => {
   }
 };
 
-const get_property_by_id = async (req, res) => {
-  const property_id = req.query.id;
+const get_property_by_id_or_name = async (req, res) => {
+  const property = req.query.property
 
   try {
-    const property = await Property.findById(property_id);
-    if (!property)
-      throw new Error("Could not find property with the id provided.");
-    res.send({ property });
+    const property_by_name = await Property.find({state: property})
+    if (property_by_name.length === 0){
+      const property_by_id = await Property.findById(property);
+      if (!property_by_id) throw new Error("Could not find a property with the name or id provided.");
+      return res.send({ property: property_by_id });
+    }
+    res.send(property_by_name)
   } catch (e) {
     res.send({ property: null, error: e.message });
   }
@@ -86,7 +89,7 @@ const delete_property_id = async (req, res) => {
 
 module.exports = {
   create_property,
-  get_property_by_id,
+  get_property_by_id_or_name,
   get_user_property_list,
   get_property_list,
   delete_property_id,

@@ -3,7 +3,7 @@ const authMiddleware = require("../middlewares/authMiddleware.js");
 const versionMiddleware = require("../middlewares/versionMiddleware.js")
 const {
   create_property_,
-  get_property_by_id_,
+  get_property_by_id_or_name_,
   get_user_property_list_,
   get_property_list_,
   delete_property_id_
@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/create", versionMiddleware, authMiddleware, create_property_);
 
 // get a property frim the database when you pass the id as query parameter
-router.get("/", versionMiddleware, authMiddleware, get_property_by_id_);
+router.get("/", versionMiddleware, authMiddleware, get_property_by_id_or_name_);
 
 // get a list of properties belonging to a user
 router.get("/user/list", versionMiddleware, authMiddleware, get_user_property_list_)

@@ -1,6 +1,6 @@
 const {
   create_property,
-  get_property_by_id,
+  get_property_by_id_or_name,
   get_property_list,
   delete_property_id,
   get_user_property_list
@@ -19,7 +19,7 @@ const create_property_ = async (req, res) => {
 };
 
 // call this function to retrieve a property
-const get_property_by_id_ = async (req, res) => {
+const get_property_by_id_or_name_ = async (req, res) => {
   /*
     This retrieves the api version passed by the developer and
     calls the version of the function in that version
@@ -27,7 +27,7 @@ const get_property_by_id_ = async (req, res) => {
   */
 
   const version = req.body.version;
-  if (version === "v1.0") return get_property_by_id(req, res);
+  if (version === "v1.0") return get_property_by_id_or_name(req, res);
 };
 
 // call this function to retrieve a list of propeties for a user
@@ -67,7 +67,7 @@ const delete_property_id_ = async (req, res) => {
 
 module.exports = {
   create_property_,
-  get_property_by_id_,
+  get_property_by_id_or_name_,
   get_property_list_,
   get_user_property_list_,
   delete_property_id_,
