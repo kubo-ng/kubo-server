@@ -16,7 +16,7 @@ const create_item = async (req, res) => {
   }
 };
 
-const get_item_by_id = async (req, res) => {
+const get_item_by_id_or_name = async (req, res) => {
   const item = req.query.item;
 
   try {
@@ -84,7 +84,7 @@ const delete_item_id = async (req, res) => {
 
 module.exports = {
   create_item,
-  get_item_by_id,
+  get_item_by_id_or_name,
   get_user_item_list,
   get_item_list,
   delete_item_id,

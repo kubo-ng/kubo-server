@@ -1,6 +1,6 @@
 const {
   create_item,
-  get_item_by_id,
+  get_item_by_id_or_name,
   get_user_item_list,
   get_item_list,
   delete_item_id,
@@ -19,7 +19,7 @@ const create_item_ = async (req, res) => {
 };
 
 // call this function to retrieve an item by its id
-const get_item_by_id_ = async (req, res) => {
+const get_item_by_id_or_name_ = async (req, res) => {
   /*
       This retrieves the api version passed by the developer and
       calls the version of the function in that version
@@ -27,7 +27,7 @@ const get_item_by_id_ = async (req, res) => {
     */
 
   const version = req.body.version;
-  if (version === "v1.0") return get_item_by_id(req, res);
+  if (version === "v1.0") return get_item_by_id_or_name(req, res);
 };
 
 // call this function to retrieve an item by its id
@@ -68,7 +68,7 @@ const delete_item_id_ = async (req, res) => {
 
 module.exports = {
   create_item_,
-  get_item_by_id_,
+  get_item_by_id_or_name_,
   get_user_item_list_,
   get_item_list_,
   delete_item_id_,
