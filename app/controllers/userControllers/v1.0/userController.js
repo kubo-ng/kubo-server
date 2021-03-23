@@ -41,17 +41,30 @@ const login_user = async (req, res) => {
       searched_user_result.password
     );
 
-    if (!password_check_result) throw new Error("Invalide login");
+    if (!password_check_result) throw new Error("Invalide login credentials.");
 
     const user_token = await searched_user_result.generateToken();
     res.send({
       valid_credentials: true,
       user_token,
-      error: "Something went wrong while while trying to login the user.",
     });
   } catch (e) {
-    res.send({ valid_credentials: false });
+    res.send({ valid_credentials: false, error: e.message });
   }
+};
+
+const logout_user = async (req, res) => {
+  const user = req.body.user;
+  const auth_token_bearer = req.headers.authorization;
+  const auth_token = auth_token_bearer.slice(7, auth_token_bearer.length);
+  try {
+    const new_token_list = user.tokens.filter((value, index, arr) => {
+      return value.token !== auth_token
+    })
+    user.tokens = new_token_list
+    await user.save()
+    res.send({logout: true})
+  } catch (e) {res.send({logout: false, error: e.message})}
 };
 
 // get user profile
@@ -111,6 +124,7 @@ const update_user_info = async (req, res) => {
 module.exports = {
   create_user,
   login_user,
+  logout_user,
   get_user,
   get_user_by_email_or_id,
   update_user_info,

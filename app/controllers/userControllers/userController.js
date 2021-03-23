@@ -1,6 +1,7 @@
 const {
   create_user,
   login_user,
+  logout_user,
   get_user,
   get_user_by_email_or_id,
   update_user_info,
@@ -28,6 +29,18 @@ const login_user_ = async (req, res) => {
 
   const version = req.body.version;
   if (version === "v1.0") return login_user(req, res);
+};
+
+// this function is called to log a user out of his account
+const logout_user_ = async (req, res) => {
+  /*
+    This retrieves the api version passed by the developer and
+    calls the version of the function in that version
+  if the api version does not exit it sends an error message.
+  */
+
+  const version = req.body.version;
+  if (version === "v1.0") return logout_user(req, res);
 };
 
 // get user profile
@@ -69,6 +82,7 @@ const update_user_info_ = async (req, res) => {
 module.exports = {
   create_user_,
   login_user_,
+  logout_user_,
   get_user_,
   get_user_by_email_or_id_,
   update_user_info_,
