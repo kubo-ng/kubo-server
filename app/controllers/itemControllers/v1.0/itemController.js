@@ -1,13 +1,14 @@
 const Item = require("../../../models/item.js");
 
 const create_item = async (req, res) => {
-  const item_info = req.body.item_info;
+  const item_info = req.body;
   item_info.owner = req.body.user._id;
+  item_info.item_image = req.file.buffer;
 
   try {
     const item = new Item(item_info);
     await item.save();
-    res.send({ itemCreated: true, id: item._id });
+    res.redirect("/items");
   } catch (e) {
     res.send({
       itemCreated: false,
@@ -20,13 +21,14 @@ const get_item_by_id_or_name = async (req, res) => {
   const item = req.query.item;
 
   try {
-    const item_by_name = await Item.find({name: item})
-    if (item_by_name.length === 0){
+    const item_by_name = await Item.find({ name: item });
+    if (item_by_name.length === 0) {
       const item_by_id = await Item.findById(item);
-      if (!item_by_id) throw new Error("Could not find an item with the name or id provided.");
+      if (!item_by_id)
+        throw new Error("Could not find an item with the name or id provided.");
       return res.send({ item: item_by_id });
     }
-    res.send(item_by_name );
+    res.send(item_by_name);
   } catch (e) {
     res.send({ item: null, error: e.message });
   }
@@ -41,7 +43,15 @@ const get_user_item_list = async (req, res) => {
     if (limit > 0 && page > 0) {
       const startFrom = (page - 1) * limit;
       await user.populate("items").execPopulate();
-      res.send(user.items.slice(startFrom, limit + startFrom));
+      const items = user.items.slice(startFrom, limit + startFrom)
+
+      const images = [];
+      items.forEach((item) => {
+        images.push(item.item_image.toString("base64"));
+      });
+
+      res.send({ items, images });
+
     } else throw new Error("Invalid value for either limit or page passed.");
   } catch (e) {
     res.send({ error: e.message });
@@ -56,7 +66,13 @@ const get_item_list = async (req, res) => {
     if (limit > 0 && page > 0) {
       const startFrom = (page - 1) * limit;
       const items = await Item.find().limit(limit).skip(startFrom);
-      res.send(items);
+
+      const images = [];
+      items.forEach((item) => {
+        images.push(item.item_image.toString("base64"));
+      });
+
+      res.send({ items, images });
     } else throw new Error("Invalid value for either limit or page passed.");
   } catch (e) {
     res.send({ error: e.message });
@@ -72,7 +88,7 @@ const delete_item_id = async (req, res) => {
     if (!item) throw new Error("Could not delete item with id provided.");
 
     is_item_deleted = true;
-    res.send({ is_item_deleted });
+    res.redirect("/profile")
   } catch (e) {
     is_item_deleted = false;
     res.send({

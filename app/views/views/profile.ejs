@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous" />
+
+    <title>KUBO | Profile</title>
+</head>
+
+<body>
+    <!-- Profile Page -->
+    <%- include("./partials/_nav") %>
+
+        <!-- Tabs -->
+        <div class="main-content">
+            <div>
+                <!-- Profile -->
+                <div class="tab-content tab-4-content">
+                    <div class="tab-side">
+                        <div class="home-content hide-on-lg">
+                            <div class="brand">
+                                <a href="#">Settings</a>
+                            </div>
+                            <div class="btn-out">
+                                <a href="/user/logout?version=v1.0"> Log out </a>
+                            </div>
+                        </div>
+                        <div class="bg-profile hide-on-lg"></div>
+                        <h3>Profile</h3>
+                        <p class="hide-on-sm greet"><%= "Hello, " + user.name %></p>
+                        <div class="avatar">
+                            <img src="/img/avatar.png" alt="" />
+                            <p><%= user.name %></p>
+                            <!-- <small>Trader</small> -->
+                        </div>
+                        <div class="land-rent">
+                            <button class="btn tab-btn tab-border" id="rent-1">
+                  Properties
+                </button>
+                            <button class="btn tab-btn" id="rent-2">Items</button>
+                        </div>
+                        <div class="rent-cnt rent-1-cnt show">
+                            <div class="cards profile-property-cards">
+                            </div>
+                            <h2 class="loading property-loading" style="font-size: 1em; text-align: center;">loading...</h2>
+                        </div>
+                        <div class="rent-cnt rent-2-cnt">
+                            <div class="cards profile-item-cards">
+                            </div>
+                            <h2 class="loading item-loading" style="font-size: 1em; text-align: center;">loading...</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/pagination.js"></script>
+    <script src="/js/load_property_and_items_profile.js"></script>
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

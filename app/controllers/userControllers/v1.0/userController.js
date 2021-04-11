@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 // this function is called to create a user in the database
 const create_user = async (req, res) => {
   // request body data
-  const user_data = req.body.user_data;
+  const user_data = req.body;
 
   try {
     const new_user = new User(user_data);
@@ -12,12 +12,8 @@ const create_user = async (req, res) => {
     if (!user) throw new Error("Something went wrong while creating the user.");
 
     const user_token = await user.generateToken();
-    res.send({
-      user_created: true,
-      token: user_token,
-      id: user._id,
-      email: user.email,
-    });
+    res.cookie("token", user_token, { httpOnly: true });
+    res.redirect("/");
   } catch (e) {
     res.send({
       userCreated: false,
@@ -29,11 +25,11 @@ const create_user = async (req, res) => {
 // this function is called to log a user into his account
 const login_user = async (req, res) => {
   // request body data
-  const user_data = req.body.user_data;
+  const user_data = req.body;
 
   try {
     const searched_user_result = await User.findOne({ email: user_data.email });
-
+ 
     if (!searched_user_result) throw new Error("Unregistered email address");
 
     const password_check_result = await bcrypt.compare(
@@ -44,10 +40,9 @@ const login_user = async (req, res) => {
     if (!password_check_result) throw new Error("Invalide login credentials.");
 
     const user_token = await searched_user_result.generateToken();
-    res.send({
-      valid_credentials: true,
-      user_token,
-    });
+
+    res.cookie("token", user_token, { httpOnly: true });
+    res.redirect("/");
   } catch (e) {
     res.send({ valid_credentials: false, error: e.message });
   }
@@ -55,23 +50,19 @@ const login_user = async (req, res) => {
 
 const logout_user = async (req, res) => {
   const user = req.body.user;
-  const auth_token_bearer = req.headers.authorization;
-  const auth_token = auth_token_bearer.slice(7, auth_token_bearer.length);
+  const auth_token = req.cookies.token
   try {
     const new_token_list = user.tokens.filter((value, index, arr) => {
-      return value.token !== auth_token
-    })
-    user.tokens = new_token_list
-    await user.save()
-    res.send({logout: true})
-  } catch (e) {res.send({logout: false, error: e.message})}
-};
-
-// get user profile
-const get_user = (req, res) => {
-  const user = req.body.user;
-
-  res.send({ auth_result: true, user });
+      return value.token !== auth_token;
+    });
+    user.tokens = new_token_list;
+    await user.save();
+    res.clearCookie("token");
+    res.clearCookie("loggedIn");
+    res.redirect("/login")
+  } catch (e) {
+    res.send({ logout: false, error: e.message });
+  }
 };
 
 // get a user profile by email and id
@@ -125,7 +116,6 @@ module.exports = {
   create_user,
   login_user,
   logout_user,
-  get_user,
   get_user_by_email_or_id,
   update_user_info,
 };

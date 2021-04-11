@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous" />
+
+    <title>KUBO | Log In</title>
+</head>
+
+<body>
+    <div class="flex-log">
+        <!-- Navigation -->
+        <div class="navigation hide-on-sm">
+            <a onclick="history.back()" class="left-arr color">&LeftArrow;</a>
+            <a href="/signup" class="sign-arr">Sign Up</a>
+        </div>
+        <!-- Log In -->
+        <div class="login">
+            <div class="container">
+                <div class="head hide-on-lg">
+                    <a onclick="history.back()" class="left-arr color">&LeftArrow;</a>
+                    <a href="/signup" class="color">Sign Up</a>
+                </div>
+                <div class="login-content">
+                    <h1>log In</h1>
+                    <form action="/user/login?version=v1.0" method="POST" class="login-form">
+                        <input name="email" type="email" id="email" placeholder="kubo@gmail.com" />
+                        <div class="pass">
+                            <input name="password" type="password" id="password" placeholder="Password" />
+                            <i class="fa fa-eye eye"></i>
+                        </div>
+                        <button class="btn-login btn">Log In</button>
+                        <a href="/resetpassword" class="forgot">Forgot your password?</a
+              >
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Logo -->
+      <div class="logo hide-on-sm">
+        <div class="container">
+          <div class="logo-content">
+            <div class="box-1"></div>
+            <div class="box-2"></div>
+            <h1>KUBO</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <script src="../js/login.js"></script> -->
+  </body>
+</html>

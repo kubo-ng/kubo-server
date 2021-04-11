@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous" />
+
+    <title>KUBO | Home</title>
+</head>
+
+<body>
+    <!-- Home Page -->
+    <%- include("./partials/_nav") %>
+        <!-- Tabs -->
+        <div class="main-content">
+            <div>
+                <!-- Chatbot -->
+                <div class="tab-content tab-6-content">
+                    <div class="messages">
+                        <div class="message">
+                            <div class="msg-1">
+                                <p>
+                                    <%= "Hi! " + user.name %>
+                                    <br />This is kubobot, your personal AI farmer here to serve you better.
+                                    <br /> Simply type a question below and I will provide you with an answer.
+                                </p>
+                            </div>
+                            <div class="msg-2">
+                                <p>Hi!</p>
+                            </div>
+                        </div>
+                        <form class="send-msg">
+                            <input type="text" id="sent-msg" placeholder="Type a message" />
+                            <i class="fa fa-arrow-circle-right send"></i>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

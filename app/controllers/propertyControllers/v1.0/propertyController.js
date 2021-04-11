@@ -1,8 +1,9 @@
 const Property = require("../../../models/property.js");
 
 const create_property = async (req, res) => {
-  const property_info = req.body.property_info;
+  const property_info = req.body;
   property_info.owner = req.body.user._id;
+  property_info.property_image = req.file.buffer;
 
   try {
     const property = new Property(property_info);
@@ -10,7 +11,7 @@ const create_property = async (req, res) => {
     if (!property) throw new Error("Failed to create new property.");
 
     await property.save();
-    res.send({ propertyCreated: true, id: property._id });
+    res.redirect("/");
   } catch (e) {
     res.send({
       propertyCreated: false,
@@ -20,16 +21,19 @@ const create_property = async (req, res) => {
 };
 
 const get_property_by_id_or_name = async (req, res) => {
-  const property = req.query.property
+  const property = req.query.property;
 
   try {
-    const property_by_name = await Property.find({state: property})
-    if (property_by_name.length === 0){
+    const property_by_name = await Property.find({ state: property });
+    if (property_by_name.length === 0) {
       const property_by_id = await Property.findById(property);
-      if (!property_by_id) throw new Error("Could not find a property with the name or id provided.");
+      if (!property_by_id)
+        throw new Error(
+          "Could not find a property with the name or id provided."
+        );
       return res.send({ property: property_by_id });
     }
-    res.send(property_by_name)
+    res.send(property_by_name);
   } catch (e) {
     res.send({ property: null, error: e.message });
   }
@@ -45,7 +49,12 @@ const get_user_property_list = async (req, res) => {
     if (limit > 0 && page > 0) {
       const startFrom = (page - 1) * limit;
       await user.populate("properties").execPopulate();
-      res.send(user.properties.slice(startFrom, limit + startFrom));
+      const properties = user.properties.slice(startFrom, limit + startFrom);
+      const images = []
+      properties.forEach(property => {
+        images.push(property.property_image.toString("base64"))
+      })
+      res.send({ properties, images });
     } else throw new Error("Invalid value for either limit or page passed.");
   } catch (e) {
     res.send({ error: e.message });
@@ -60,7 +69,11 @@ const get_property_list = async (req, res) => {
     if (limit > 0 && page > 0) {
       const startFrom = (page - 1) * limit;
       const properties = await Property.find().limit(limit).skip(startFrom);
-      res.send(properties);
+      const images = []
+      properties.forEach(property => {
+        images.push(property.property_image.toString("base64"))
+      })
+      res.send({ properties, images });
     } else throw new Error("Invalid value for either limit or page passed.");
   } catch (e) {
     res.send({ error: e.message });
@@ -72,17 +85,13 @@ const delete_property_id = async (req, res) => {
   let is_property_deleted;
 
   try {
-    const property = await Property.findByIdAndDelete(property_id);
-    if (!property)
-      throw new Error("Could not delete property with id provided.");
-
-    is_property_deleted = true;
-    res.send({ is_property_deleted });
+    await Property.findByIdAndDelete(property_id);
+    res.redirect("/profile");
   } catch (e) {
     is_property_deleted = false;
     res.send({
       is_property_deleted,
-      error: "Could not delete property with id provided.",
+      error: e.message,
     });
   }
 };

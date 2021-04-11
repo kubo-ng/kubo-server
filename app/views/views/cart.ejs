@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous" />
+
+    <title>KUBO | Cart</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div>
+                    <a onclick="history.back()" class="left-arr">&LeftArrow;</a>
+                </div>
+                <div>
+                    <a href="cart.html" class="cart">
+                        <i class="fas fa-cart-arrow-down"></i>
+                        <p class="counter">01</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+    <!-- Flex Cart_Checkout -->
+    <div class="flex-cart">
+        <!-- Carts Page -->
+        <div class="carts">
+            <h2>Your Shopping Cart</h2>
+            <!--  -->
+            <div class="cart-cards">
+                <div class="card">
+                    <div class="card-dets">
+                        <img src="/static/img/01.jpg" alt="" />
+                        <div>
+                            <p>Lekki Phase II</p>
+                            <small>Lekki</small>
+                        </div>
+                    </div>
+                    <div class="price">
+                        <small><b>$<span class="color">1500</span></b></small
+              >
+            </div>
+            <button class="cancel">&times;</button>
+          </div>
+        </div>
+        <!--  -->
+        <div class="cart-cards">
+          <div class="card">
+            <div class="card-dets">
+              <img src="/static/img/01.jpg" alt="" />
+              <div>
+                <p>Lekki Phase II</p>
+                <small>Lekki</small>
+            </div>
+        </div>
+        <div class="price">
+            <small><b>$<span class="color">1500</span></b></small
+              >
+            </div>
+            <button class="cancel">&times;</button>
+          </div>
+        </div>
+
+        <!--  -->
+        <div class="subtotal">
+          <p>SUBTOTAL</p>
+          <p>$6000</p>
+        </div>
+      </div>
+
+      <!-- Checkout -->
+      <div class="checkout">
+        <div class="checkout-content">
+          <h2 class="color">Card Details</h2>
+          <p>Select Card Type</p>
+          <div class="card-type">
+            <button class="fab fa-cc-mastercard fa-2x"></button>
+            <button class="fab fa-cc-visa fa-2x"></button>
+            <button class="fab fa-cc-paypal fa-2x"></button>
+          </div>
+          <form action="/items" class="cart-form">
+            <label>Card Number</label>
+            <input type="number" />
+            <div class="exp-cv">
+              <label>Expiry Date</label>
+              <input type="number" />
+              <label>CVV</label>
+              <input type="number" />
+            </div>
+            <button class="btn-checkout">Checkout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

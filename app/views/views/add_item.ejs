@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous" />
+
+    <title>KUBO | Home</title>
+</head>
+
+<body>
+    <!-- Home Page -->
+        <%- include("./partials/_nav") %>
+        <!-- Tabs -->
+        <div class="main-content">
+            <div>
+                <!-- Add Land -->
+                <div class="tab-content tab-5-content">
+                    <div class="tab-side land-content">
+                        <h2>Items</h2>
+                        <h3>Add an item</h3>
+                        <p>Fill your item details</p>
+                        <form action="/item/create?version=v1.0" enctype="multipart/form-data" method="POST" class="land-form">
+                            <div class="amt-dur">
+                                <input name="name" maxlength="15" type="text" id="text" placeholder="Name" />
+                                <input name="price" maxlength="19" type="number" id="amount" placeholder="Price" />
+                            </div>
+                            <input name="quantity" maxlength="2" type="number" id="size" placeholder="Quantity" />
+                            <textarea name="description" maxlength="100" id="desc" cols="20" rows="5" placeholder="Description"></textarea>
+                            <input type="file" name="property_image" id="picture" placeholder="Add Pictures" />
+                            <button class="btn">Create Item</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/nav.js"></script>
+    <!-- <script src="js/add_land.js"></script> -->
+</body>
+
+</html>

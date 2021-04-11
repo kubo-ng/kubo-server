@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous" />
+
+    <title>KUBO | Sign Up</title>
+</head>
+
+<body>
+    <div class="flex-log">
+        <!-- Navigation -->
+        <div class="navigation hide-on-sm">
+            <a onclick="history.back()" class="left-arr color">&LeftArrow;</a>
+            <a href="/login" class="sign-arr">Log In</a>
+        </div>
+        <!-- Sign Up -->
+        <div class="signup">
+            <div class="container">
+                <div class="head hide-on-lg">
+                    <a onclick="history.back()" class="left-arr color">&LeftArrow;</a>
+                    <a href="/login" class="color">Log In</a>
+                </div>
+                <div class="signup-content">
+                    <h1>Sign Up</h1>
+                    <div class="alert">
+                        <p>Welcome</p>
+                        <p>Let's get you started</p>
+                    </div>
+                    <form action="/user/signup?version=v1.0" method="POST" class="signup-form">
+                        <input name="name" type="text" id="name" placeholder="Name" />
+                        <input name="email" type="email" id="email" placeholder="kubo@gmail.com" />
+                        <div class="pass">
+                            <input name="password" type="password" id="password" placeholder="Password" />
+                            <i class="fa fa-eye eye"></i>
+                        </div>
+                        <button class="btn-signup btn">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Logo -->
+        <div class="logo hide-on-sm">
+            <div class="container">
+                <div class="logo-content">
+                    <div class="box-1"></div>
+                    <div class="box-2"></div>
+                    <h1>KUBO</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/signup.js"></script>
+</body>
+
+</html>

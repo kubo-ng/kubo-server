@@ -11,8 +11,7 @@ const authMiddleware = async (req, res, next) => {
   */
  
   try {
-    const auth_token_bearer = req.headers.authorization;
-    const auth_token = auth_token_bearer.slice(7, auth_token_bearer.length);
+    const auth_token = req.cookies.token;
 
     const jwt_data = jwt.verify(auth_token, "supersecretkey");
     const user_id = jwt_data.id;
@@ -25,7 +24,7 @@ const authMiddleware = async (req, res, next) => {
     req.body.user = user;
     next();
   } catch (e) {
-    res.status(401).send({ auth_result: false, error: e.message });
+    res.status(401).redirect("/login");
   }
 };
 

@@ -5,7 +5,6 @@ const {
   create_user_,
   login_user_,
   logout_user_,
-  get_user_,
   get_user_by_email_or_id_,
   update_user_info_,
 } = require("../controllers/userControllers/userController");
@@ -17,9 +16,6 @@ router.post("/signup", versionMiddleware, create_user_);
 
 // log in an existing user
 router.post("/login", versionMiddleware, login_user_);
-
-// get user info
-router.get("/profile", versionMiddleware, authMiddleware, get_user_);
 
 // get user info by email or id
 router.get(
@@ -37,6 +33,6 @@ router.put(
   update_user_info_
 );
 
-router.delete("/logout", versionMiddleware, authMiddleware, logout_user_);
+router.get("/logout", versionMiddleware, authMiddleware, logout_user_);
 
 module.exports = router;

@@ -5,28 +5,29 @@ const item_schema = mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    maxlength: 10
+    maxlength: 15,
   },
   price: {
-    type: String,
+    type: Number,
     required: true,
     trim: true,
-    maxlength: 19
+    maxlength: 19,
   },
   description: {
     type: String,
     required: true,
     trim: true,
-    maxlength: 100
+    maxlength: 100,
   },
   quantity: {
-    type: String,
+    type: Number,
     required: true,
     trim: true,
-    maxlength: 2
+    maxlength: 2,
   },
   item_image: {
     type: Buffer,
+    required: true,
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

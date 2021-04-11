@@ -1,0 +1,81 @@
+<!-- Mobile Nav -->
+<div class="mobile-nav">
+    <nav style="padding-left: 1em; padding-right: 1em;" class="mobile-nav-content hide-on-lg">
+        <ul>
+            <li <% if (page === "home") { %> class="tab tab-background" <% }else{ %> class="tab" <% } %> id="tab-1">
+                <a href="/" class="tab-inner">
+                    <img class="landscape" src="/img/landscape.png" alt="" />
+                    <small>Land Market</small>
+                </a>
+            </li>
+            <li <% if (page === "item") { %> class="tab tab-background" <% }else{ %> class="tab" <% } %> id="tab-2">
+                <a href="/items" class="tab-inner">
+                    <img src="/img/gps_fixed.png" alt="" />
+                    <small>Crop Market</small>
+                </a>
+            </li>
+            <li <% if (page === "kubobot") { %> class="tab tab-background" <% }else{ %> class="tab" <% } %> id="tab-6">
+                <a href="/kubobot" class="tab-inner">
+                    <img src="/img/dashboard.png" alt="" />
+                    <small>...</small>
+                </a>
+            </li>
+            <li class="tab" id="tab-3">
+                <a href="messages.html" class="tab-inner">
+                    <img src="/img/pan_tool.png" alt="" />
+                    <small>Messages</small>
+                </a>
+            </li>
+            <li <% if (page === "profile") { %> class="tab tab-background" <% }else{ %> class="tab" <% } %> id="tab-4">
+                <a href="/profile" class="tab-inner">
+                    <img src="/img/person_outline.png" alt="" />
+                    <small>Profile</small>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!-- Desktop Nav -->
+<div class="flex-nav">
+    <div class="desktop-nav">
+        <nav class="desktop-nav-content hide-on-sm">
+            <div class="desktop-brand">
+                <h1>KUBO</h1>
+            </div>
+            <div class="avatar">
+                <img src="/img/avatar.png" alt="" />
+                <div class="avatar-tag">
+                    <p><%= user.name %></p>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <a href="/user/logout?version=v1.0">
+                    <button class="out-btn">Log out</button>
+                </a>
+            </div>
+            <ul>
+                
+                <a <% if (page === "home") { %> class="tab tab-background" <% }else{ %> class="tab" <% } %> href="/" id="tab-1">
+                    <img class="landscape" src="/img/landscape.png" alt="" />
+                    <p>Land Market</p>
+                </a>
+                <a <% if (page === "item") { %> class="tab tab-background" <% }else{ %> class="tab" <% } %> href="/items" id="tab-2">
+                    <img src="/img/gps_fixed.png" alt="" />
+                    <p>Fixed Market</p>
+                </a>
+
+                <a <% if (page === "kubobot") { %> class="tab tab-background" <% }else{ %> class="tab" <% } %> href="/kubobot" class="tab" id="tab-6">
+                    <img src="/img/dashboard.png" alt="" />
+                    <p>Chat Bot</p>
+                </a>
+
+                <a href="messages.html" class="tab" id="tab-3">
+                    <img src="/img/pan_tool.png" alt="" />
+                    <p>Messages</p>
+                </a>
+                <a <% if (page === "profile") { %> class="tab tab-background" <% }else{ %> class="tab" <% } %> href="/profile" id="tab-4">
+                    <img src="/img/person_outline.png" alt="" />
+                    <p>Profile</p>
+                </a>
+            </ul>
+        </nav>
+    </div>

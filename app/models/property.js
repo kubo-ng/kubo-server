@@ -12,7 +12,9 @@ const property_schema = mongoose.Schema({
     trim: true,
   },
   amount: {
-    type: String,
+    type: Number,
+    maxlength: 19,
+    minlength: 19,
     required: true,
     trim: true,
   },
@@ -34,17 +36,18 @@ const property_schema = mongoose.Schema({
     },
   },
   size: {
-    type: String,
+    type: Number,
     required: true,
     trim: true,
   },
   duration_of_deal: {
-    type: String,
+    type: Number,
     required: true,
     trim: true,
   },
   property_image: {
     type: Buffer,
+    required: true
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
